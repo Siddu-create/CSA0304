@@ -1,0 +1,80 @@
+#include <stdio.h>
+
+#define MAX_SIZE 100 // Define maximum size of the array
+
+// Function to display array elements
+void display(int arr[], int size) {
+    if (size == 0) {
+        printf("Array is empty.\n");
+        return;
+    }
+    printf("Array elements: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Function to insert an element at a specific position
+int insert(int arr[], int *size, int element, int position) {
+    if (*size >= MAX_SIZE) {
+        printf("Error: Array is full. Cannot insert.\n");
+        return 0; // Insertion failed
+    }
+    if (position < 0 || position > *size) {
+        printf("Error: Invalid position for insertion.\n");
+        return 0; // Insertion failed
+    }
+
+    // Shift elements to make space for the new element
+    for (int i = *size; i > position; i--) {
+        arr[i] = arr[i - 1];
+    }
+
+    arr[position] = element; // Insert the element
+    (*size)++; // Increment array size
+    printf("Element %d inserted at position %d.\n", element, position);
+    return 1; // Insertion successful
+}
+
+// Function to delete an element from a specific position
+int delete(int arr[], int *size, int position) {
+    if (*size == 0) {
+        printf("Error: Array is empty. Cannot delete.\n");
+        return 0; // Deletion failed
+    }
+    if (position < 0 || position >= *size) {
+        printf("Error: Invalid position for deletion.\n");
+        return 0; // Deletion failed
+    }
+
+    int deleted_element = arr[position]; // Store the deleted element
+
+    // Shift elements to fill the gap created by deletion
+    for (int i = position; i < *size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    (*size)--; // Decrement array size
+    printf("Element %d deleted from position %d.\n", deleted_element, position);
+    return 1; // Deletion successful
+}
+
+int main() {
+    int arr[MAX_SIZE];
+    int current_size = 0; // Current number of elements in the array
+
+    // Example Usage:
+    insert(arr, &current_size, 10, 0); // Insert 10 at index 0
+    insert(arr, &current_size, 20, 1); // Insert 20 at index 1
+    insert(arr, &current_size, 30, 1); // Insert 30 at index 1 (shifts 20)
+    display(arr, current_size);
+
+    delete(arr, &current_size, 0); // Delete element at index 0
+    display(arr, current_size);
+
+    insert(arr, &current_size, 40, current_size); // Insert 40 at the end
+    display(arr, current_size);
+
+    return 0;
+}
