@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+// Function for iterative binary search
+int iterativeBinarySearch(int arr[], int size, int target) {
+    int low = 0;
+    int high = size - 1;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2; // Calculate middle index
+
+        if (arr[mid] == target) {
+            return mid; // Target found at mid index
+        } else if (arr[mid] < target) {
+            low = mid + 1; // Target is in the right half
+        } else {
+            high = mid - 1; // Target is in the left half
+        }
+    }
+    return -1; // Target not found
+}
+
+// Function for recursive binary search
+int recursiveBinarySearch(int arr[], int low, int high, int target) {
+    if (low > high) {
+        return -1; // Base case: target not found
+    }
+
+    int mid = low + (high - low) / 2; // Calculate middle index
+
+    if (arr[mid] == target) {
+        return mid; // Target found at mid index
+    } else if (arr[mid] < target) {
+        return recursiveBinarySearch(arr, mid + 1, high, target); // Search in right half
+    } else {
+        return recursiveBinarySearch(arr, low, mid - 1, target); // Search in left half
+    }
+}
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100}; // Sorted array
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int target_iterative = 50;
+    int target_recursive = 70;
+
+    // Test iterative binary search
+    int result_iterative = iterativeBinarySearch(arr, size, target_iterative);
+    if (result_iterative != -1) {
+        printf("Iterative Search: Element %d found at index %d.\n", target_iterative, result_iterative);
+    } else {
+        printf("Iterative Search: Element %d not found.\n", target_iterative);
+    }
+
+    // Test recursive binary search
+    int result_recursive = recursiveBinarySearch(arr, 0, size - 1, target_recursive);
+    if (result_recursive != -1) {
+        printf("Recursive Search: Element %d found at index %d.\n", target_recursive, result_recursive);
+    } else {
+        printf("Recursive Search: Element %d not found.\n", target_recursive);
+    }
+
+    return 0;
+}
