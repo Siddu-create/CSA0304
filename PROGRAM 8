@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int array[100]; // Declare an array to store elements
+    int n, search_element, i;
+    int found = 0; // Flag to indicate if the element is found
+
+    printf("Enter the number of elements in the array: ");
+    scanf("%d", &n);
+
+    printf("Enter %d integers:\n", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &array[i]);
+    }
+
+    printf("Enter the number to search: ");
+    scanf("%d", &search_element);
+
+    // Perform Linear Search
+    for (i = 0; i < n; i++) {
+        if (array[i] == search_element) {
+            printf("%d is present at index %d.\n", search_element, i);
+            found = 1; // Set flag to true
+            break;     // Exit the loop once found
+        }
+    }
+
+    if (found == 0) {
+        printf("%d is not present in the array.\n", search_element);
+    }
+
+    return 0;
+}
